@@ -11,16 +11,24 @@ const svg = d3.select("#chart")
 d3.csv("./data/US_Textile_Fiber_Trade.csv", parse).then(function (data) {
 
     /* filter subset of data, grabbing only the rows where the country = China */
-    const filtered = data.filter(d => d.year == 2020);
+    const filtered = data.filter(d => d.year == 2020 && d.category == "apparel" && d.import_export == "import");
+    console.log(filtered);
+
+    const nested = d3.nest()
+        .key(d => d.month)
+        .rollup(v => d3.mean(v, d => d.value))
+        .entries(filtered);
+    nested.forEach(d => d.key = +d.key);
+    console.log(nested);
 
     //scales: we'll use a band scale for the bars
     const xScale = d3.scaleBand()
-        .domain(filtered.map(d => d.month))
+        .domain(nested.map(d => d.key))
         .range([margin.left, width - margin.right])
         .padding(0.1);
 
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(filtered, d => d.fiber_type)])
+        .domain([0, d3.max(nested, d => d.value)])
         .range([height - margin.bottom, margin.top]);
 
     //append the bars to the svg
@@ -34,13 +42,13 @@ d3.csv("./data/US_Textile_Fiber_Trade.csv", parse).then(function (data) {
     */
 
     let bar = svg.selectAll("rect")
-        .data(filtered)
+        .data(nested)
         .enter()
         .append("rect")
-        .attr("x", d => xScale(d.month))
-        .attr("y", d => yScale(d.fiber_type))
+        .attr("x", d => xScale(d.key))
+        .attr("y", d => yScale(d.value))
         .attr("width", xScale.bandwidth())
-        .attr("height", d => height - margin.bottom - yScale(d.fiber_type))
+        .attr("height", d => height - margin.bottom - yScale(d.value))
         .attr("fill", "black");
 
     const xAxis = svg.append("g")
@@ -52,7 +60,7 @@ d3.csv("./data/US_Textile_Fiber_Trade.csv", parse).then(function (data) {
         .attr("class", "axis")
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft().scale(yScale)
-        .tickFormat(d3.format("$.2s")));
+        .tickFormat(d3.format("n")));
 
     const xAxisLabel = svg.append("text")
         .attr("class", "axisLabel")
@@ -63,9 +71,9 @@ d3.csv("./data/US_Textile_Fiber_Trade.csv", parse).then(function (data) {
     const yAxisLabel = svg.append("text")
         .attr("class", "axisLabel")
         .attr("transform", "rotate(-90)")
-        .attr("x", -height / 2)
+        .attr("x", -height / 1.5)
         .attr("y", margin.left / 2)
-        .text("Fiber Type");
+        .text("Apparel Imported (Thousand Pounds)");
 });
 
 //get the data in the right format
