@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+}
+
+h2 {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin:30px 50px;
+  font-size: 14pt;
+}
+
+#container {
+  width: 100%;
+  height: 90vh;
+  display: grid;
+  grid-template-columns: 6fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+        "chart legend";
+}
+
+#chart {
+  height: 90vh;
+  grid-area: chart;
+}
+
+#legend {
+  height: 50%;
+  margin-top: 100%;
+  grid-area: legend;
+}
+
+.axisLabel {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 12pt;
+}
+
+.axis {
+  font-size: 9pt;
+}
+
+.legendLabel {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 10pt;
+  vertical-align: middle;
+}
