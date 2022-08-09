@@ -1,3 +1,5 @@
+var month = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
+
 //Setting up the SVG where we'll be appending everything for our chart
 const width = document.querySelector("#chart").clientWidth;
 const height = document.querySelector("#chart").clientHeight;
@@ -54,7 +56,7 @@ d3.csv("./data/US_Textile_Fiber_Trade.csv", parse).then(function (data) {
     const xAxis = svg.append("g")
         .attr("class", "axis")
         .attr("transform", `translate(0,${height - margin.bottom})`)
-        .call(d3.axisBottom().scale(xScale).tickFormat(d3.format("Y")));
+        .call(d3.axisBottom().scale(xScale).tickFormat(function(d, val){return month[val];}));
 
     const yAxis = svg.append("g")
         .attr("class", "axis")
