@@ -53,3 +53,12 @@ h2 {
   font-size: 10pt;
   vertical-align: middle;
 }
+
+.multAxisLabel {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 12pt;
+}
+
+.multAxis {
+  font-size: 9pt;
+}

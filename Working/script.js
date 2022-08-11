@@ -158,27 +158,28 @@ d3.csv("./data/US_Textile_Fiber_Trade.csv", parse).then(function (data) {
     
     //draw the multiples
     const xAxis_mult = multiples.append("g")
-        .attr("class", "axis")
+        .attr("class", "multAxis")
         .attr("transform", `translate(0,${height - margin.bottom})`)
+        .attr("height", "20px")
         .call(d3.axisBottom().scale(xScale)
         //.tickFormat(d3.format("Y")));
         .tickFormat(function(d, val){return months[val];}));
 
     const yAxis_mult = multiples.append("g")
-        .attr("class", "axis")
+        .attr("class", "multAxis")
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft()
             .scale(yScale)
             .tickFormat(d3.format(".2s"))); //use d3.format to customize your axis tick format
 
     const xAxisLabel_mult = multiples.append("text")
-        .attr("class", "axisLabel")
+        .attr("class", "multAxisLabel")
         .attr("x", width / 2)
         .attr("y", height - margin.bottom / 3)
         .text("Month");
 
     const yAxisLabel_mult = multiples.append("text")
-        .attr("class", "axisLabel")
+        .attr("class", "multAxisLabel")
         .attr("transform", "rotate(-90)")
         .attr("x", -height / 2)
         .attr("y", margin.left / 2)
