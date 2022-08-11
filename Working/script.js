@@ -127,14 +127,14 @@ d3.csv("./data/US_Textile_Fiber_Trade.csv", parse).then(function (data) {
         .attr("class", "axisLabel")
         .attr("x", width / 2)
         .attr("y", height - margin.bottom / 3)
-        .text("Year");
+        .text("Month");
 
     const yAxisLabel = svg.append("text")
         .attr("class", "axisLabel")
         .attr("transform", "rotate(-90)")
         .attr("x", -height / 2)
         .attr("y", margin.left / 2)
-        .text("World Population");
+        .text("Pounds Imported");
 
     //draw the legend
     const legendRects = legend.selectAll("rect")
@@ -157,13 +157,32 @@ d3.csv("./data/US_Textile_Fiber_Trade.csv", parse).then(function (data) {
         .text(d => d)
     
     //draw the multiples
-    const multiples = multiples.selectAll("path")
-        .data(stackedData)
-        .enter()
-        .append("path")
-        .attr("class", "multiple")
-        .attr("transform", (d, i) => `translate(${margin.left},${i * (multiplesHeight + multiplesMargin)})`)
-        
+    const xAxis_mult = multiples.append("g")
+        .attr("class", "axis")
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom().scale(xScale)
+        //.tickFormat(d3.format("Y")));
+        .tickFormat(function(d, val){return months[val];}));
+
+    const yAxis_mult = multiples.append("g")
+        .attr("class", "axis")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft()
+            .scale(yScale)
+            .tickFormat(d3.format(".2s"))); //use d3.format to customize your axis tick format
+
+    const xAxisLabel_mult = multiples.append("text")
+        .attr("class", "axisLabel")
+        .attr("x", width / 2)
+        .attr("y", height - margin.bottom / 3)
+        .text("Month");
+
+    const yAxisLabel_mult = multiples.append("text")
+        .attr("class", "axisLabel")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", margin.left / 2)
+        .text("Pounds Imported");    
 });
 // Create Event Handlers for mouse
 function handleMouseOver(d, i) {  // Add interactivity
