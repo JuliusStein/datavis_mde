@@ -13,22 +13,43 @@ h2 {
   font-size: 14pt;
 }
 
-#chart {
+#container {
   width: 100%;
   height: 90vh;
+  display: grid;
+  grid-template-columns: 6fr 1fr 3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+        "chart legend multiples";
+}
+
+#chart {
+  height: 90vh;
+  grid-area: chart;
+}
+
+#legend {
+  height: 50%;
+  margin-top: 100%;
+  grid-area: legend;
+}
+
+#multiples {
+  height: 90vh;
+  grid-area: multiples;
 }
 
 .axisLabel {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 .axis {
   font-size: 9pt;
 }
 
-#btn{
-  color: blue;
-  font-size: 12pt;
-
+.legendLabel {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 10pt;
+  vertical-align: middle;
 }
